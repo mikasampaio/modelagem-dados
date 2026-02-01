@@ -64,6 +64,12 @@ export class CustomersRepository {
     });
   }
 
+  async getByPhone(phone: string): Promise<Customer | null> {
+    return await this.prisma.customer.findFirst({
+      where: { phone },
+    });
+  }
+
   async update(
     id: string,
     data: Prisma.CustomerUpdateInput,

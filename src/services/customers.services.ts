@@ -10,18 +10,28 @@ export class CustomerService {
 
   async create({
     email,
+    phone,
     ...props
   }: Prisma.CustomerCreateInput): Promise<Customer> {
-    const foundCustomer = await this.customerRepository.getByEmail(email);
+    const foundEmail = await this.customerRepository.getByEmail(email);
 
-    if (foundCustomer) {
+    if (foundEmail) {
       throw new ErrorMessage(
         "Customer with this email already exists.",
         StatusCodes.BAD_REQUEST,
       );
     }
 
-    return await this.customerRepository.create({ email, ...props });
+    const foundPhone = await this.customerRepository.getByPhone(phone);
+
+    if (foundPhone) {
+      throw new ErrorMessage(
+        "Customer with this phone already exists.",
+        StatusCodes.BAD_REQUEST,
+      );
+    }
+
+    return await this.customerRepository.create({ email, phone, ...props });
   }
 
   async get(params: QueryDTO): Promise<IGetResponse<Customer>> {
@@ -56,6 +66,19 @@ export class CustomerService {
       if (foundCustomer) {
         throw new ErrorMessage(
           "Customer with this email already exists.",
+          StatusCodes.BAD_REQUEST,
+        );
+      }
+    }
+
+    if (data.phone && data.phone !== customer.phone) {
+      const foundCustomer = await this.customerRepository.getByPhone(
+        data.phone as string,
+      );
+
+      if (foundCustomer) {
+        throw new ErrorMessage(
+          "Customer with this phone already exists.",
           StatusCodes.BAD_REQUEST,
         );
       }
