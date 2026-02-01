@@ -5,7 +5,7 @@ dotenv.config();
 import { z } from "zod";
 
 const envSchema = z.object({
-  PORT: z.string().default("3000").transform(Number),
+  PORT: z.string().default("3333").transform(Number),
   NODE_ENV: z
     .enum(["development", "production", "test"], {
       error: "NODE_ENV must be one of 'development', 'production', or 'test'",
