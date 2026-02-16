@@ -15,7 +15,7 @@ export class OrderService {
       const customer = await tx.customer.findFirst({
         where: {
           id: customerId,
-          status: { deletedAt: null },
+          OR: [{ status: null }, { status: { is: { deletedAt: null } } }],
         },
       });
 
