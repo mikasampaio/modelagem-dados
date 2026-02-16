@@ -22,13 +22,13 @@ git clone https://github.com/mikasampaio/RID164236_modelagem-dados.git
 Acesse a pasta do projeto:
 
 ```bash
-cd modelagem-dados
+cd RID164236_modelagem-dados
 ```
 
 ou 
 
 ```bash
-code modelagem-dados/
+code RID164236_modelagem-dados/
 ```
 
 Instale as dependências:
